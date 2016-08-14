@@ -4,3 +4,24 @@ local_hook="$HOME"/.git_template.local/hooks/post-merge
 [ -f "$local_hook" ] && . "$local_hook"
 
 .git/hooks/ctags >/dev/null 2>&1 &
+
+changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+
+check_run() {
+  echo "$changed_files" | grep --quiet "$1" && eval "$2"
+}
+
+# Example usage
+# In this example it's used to run `npm install` if package.json changed and `bower install` if `bower.json` changed.
+check_run package.json "npm install"
+check_run bower.json "bower install"
+
+
+# Updating git submodules
+check_run .gitmodules "git submodule init && git submodule update"
+
+# Installing composer dependencies
+check_run composer.json "composer install"
+
+# For those who use gulp
+check_run web/assets "gulp --production"

@@ -1,5 +1,6 @@
 {
   "extends": "eslint:recommended",
+
   "env": {
     "browser": true
   },
@@ -14,6 +15,7 @@
     "no-unused-vars": 1,
     "global-require": 1,
     "no-console": 1,
-    "no-empty":1
+    "no-empty": 1,
+    "quotes": ["error", "double"]
   }
 }
