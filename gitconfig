@@ -135,7 +135,7 @@
   b = branch
 
   # Clone a repository including all submodules
-  c = clone --recursive
+  # c = clone --recursive
   ci = commit -v
   co = checkout
   cp = cherry-pick
