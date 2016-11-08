@@ -61,7 +61,7 @@
   autosquash = true
   autostash = true
 [pull]
-  rebase = true
+  # rebase = true
 
 [diff]
   renames = copy
@@ -114,7 +114,7 @@
 
 [apply]
   # Detect whitespace errors when applying a patch
-  whitespace = fix
+  # whitespace = fix
 
 [help]
   # Automatically correct and execute mistyped commands
@@ -139,6 +139,7 @@
   ca = !git add -A && git commit -av
   # List contributors with number of commits
   contributors = shortlog --summary --numbered
+
 
   # `git di $number` shows the diff between the state `$number` revisions ago and the current state
   di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
@@ -194,9 +195,6 @@
   # Find commits by commit message
   # fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-
-
-
   # Merge GitHub pull request on top of the current branch or,
   # if a branch name is specified, on top of the specified branch
   mpr = "!f() { \
@@ -212,3 +210,12 @@
       git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
     fi \
   }; f"
+
+  please="push --force-with-lease"
+  commend = commit --amend --no-edit
+  # git it both initializes your repository and creates an empty root commit in one quick step.
+  it = '!git init && git commit -m "root" --allow-empty'
+
+[user]
+	name = jiewei.ljw
+	email = jiewei.ljw@alibaba-inc.com
