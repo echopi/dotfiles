@@ -16,6 +16,6 @@
     "global-require": 1,
     "no-console": 1,
     "no-empty": 1,
-    "quotes": ["error", "double"]
+    "quotes": [0, "double"]
   }
 }

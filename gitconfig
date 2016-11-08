@@ -1,13 +1,25 @@
 [init]
   templatedir = ~/.git_template
-[push]
-  default = current
-  # Use the Git 1.x.x default to avoid errors on machines with old Git
-  # installations. To use `simple` instead, add this to your `~/.extra` file:
-  # `git config --global push.default simple`. See http://git.io/mMah-w.
-  # default = matching
-  # Make `git push` push relevant annotated tags when pushing branches out.
-  followTags = true
+
+[core]
+  autocrlf = input
+  # Use custom `.gitignore` and `.gitattributes`
+  excludesfile = ~/.gitignore
+  # attributesfile = ~/.gitattributes
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+  # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+  precomposeunicode = false
+
 [color]
   diff = auto
   status = true
@@ -34,63 +46,65 @@
   changed = green
   untracked = cyan
 
+[push]
+  default = current
+  # Use the Git 1.x.x default to avoid errors on machines with old Git
+  # installations. To use `simple` instead, add this to your `~/.extra` file:
+  # `git config --global push.default simple`. See http://git.io/mMah-w.
+  # default = matching
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
+
+[fetch]
+  prune = true
+
+[rebase]
+  autosquash = true
+  autostash = true
+
+[pull]
+  # rebase = true
+
 [diff]
-  renames = copy
-[core]
-  excludesfile = ~/.gitignore
-  autocrlf = input
+  # renames = copy
+  # Detect copies as well as renames
+  renames = copies
+
+[diff "bin"]
+  # Use `hexdump` to diff binary files
+  textconv = hexdump -v -C
+
 [merge]
   summary = true
   tool = vimdiff
   # Include summaries of merged commits in newly created merge commit messages
   log = true
-[diff]
-  renames = copy
+
 [status]
   submodulesummary = -1
+
 [mergetool "vimdiff"]
   cmd = "vim --noplugin \"$PWD/$MERGED\" \
         +\":split $PWD/$REMOTE\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$LOCAL\" +\":set buftype=nowrite\" \
         +\":vertical diffsplit $PWD/$BASE\" +\":set buftype=nowrite\" \
         +\":wincmd l\""
+
 [format]
   numbered = auto
+
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+
 [commit]
   template = ~/.gitmessage
   # https://help.github.com/articles/signing-commits-using-gpg/
   # gpgsign = true
 
-[fetch]
-  prune = true
-[rebase]
-  autosquash = true
-  autostash = true
-[pull]
-  rebase = true
-[core]
-  # Use custom `.gitignore` and `.gitattributes`
-  excludesfile = ~/.gitignore
-  attributesfile = ~/.gitattributes
 
-  # Treat spaces before tabs and all kinds of trailing whitespace as an error
-  # [default] trailing-space: looks for spaces at the end of a line
-  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-
-  # Make `git rebase` safer on macOS
-  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-  trustctime = false
-
-  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
-  # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
-  precomposeunicode = false
 # URL shorthands
-
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -109,19 +123,9 @@
 
 [apply]
   # Detect whitespace errors when applying a patch
-  whitespace = fix
-
-[diff]
-  # Detect copies as well as renames
-  renames = copies
-
-[diff "bin"]
-
-  # Use `hexdump` to diff binary files
-  textconv = hexdump -v -C
+  # whitespace = fix
 
 [help]
-
   # Automatically correct and execute mistyped commands
   autocorrect = 1
 
@@ -199,9 +203,6 @@
   # Find commits by commit message
   # fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-
-
-
   # Merge GitHub pull request on top of the current branch or,
   # if a branch name is specified, on top of the specified branch
   mpr = "!f() { \
@@ -217,3 +218,12 @@
       git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
     fi \
   }; f"
+
+  please="push --force-with-lease"
+  commend = commit --amend --no-edit
+  # git it both initializes your repository and creates an empty root commit in one quick step.
+  it = '!git init && git commit -m "root" --allow-empty'
+
+[user]
+	name = jiewei.ljw
+	email = jiewei.ljw@alibaba-inc.com
