@@ -27,3 +27,6 @@ MSG
 fi
 
 unset _old_path
+
+export NVM_DIR="/Users/jiewei.ljw/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
