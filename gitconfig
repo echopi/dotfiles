@@ -82,6 +82,8 @@
 
 [status]
   submodulesummary = -1
+[grep]
+  linenumber = true
 
 [mergetool "vimdiff"]
   cmd = "vim --noplugin \"$PWD/$MERGED\" \
@@ -156,6 +158,7 @@
   d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
   # Remove branches that have already been merged with master
   # a.k.a. ‘delete merged’
+  # git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d
   dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
   # Switch to a branch, creating it if necessary

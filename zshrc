@@ -47,3 +47,4 @@ _load_settings "$HOME/.zsh/configs"
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+export PATH=/opt/local/bin:$PATH
